@@ -236,6 +236,7 @@ class OpenIdConnectAuth(BaseOAuth2):
         Retrieve the access token. Also, validate the id_token and
         store it (temporarily).
         """
+        social_logger.log(*args)
         response = self.get_json(*args, **kwargs)
         self.id_token = self.validate_and_return_id_token(
             response["id_token"], response["access_token"]
