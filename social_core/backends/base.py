@@ -234,13 +234,13 @@ class BaseAuth:
         )
         if self.SEND_USER_AGENT and "User-Agent" not in kwargs["headers"]:
             kwargs["headers"]["User-Agent"] = self.setting("USER_AGENT") or user_agent()
-        method = kwargs.get("method", "GET")
+        method = kwargs.get("method", "GET") 
         try:
             if self.SSL_PROTOCOL:
                 session = SSLHttpAdapter.ssl_adapter_session(self.SSL_PROTOCOL)
                 response = session.request(method, url, *args, **kwargs)
             else:
-                response = request(url, *args, **kwargs)
+                response = request(method, url, *args, **kwargs)
         except ConnectionError as err:
             raise AuthFailed(self, str(err))
         response.raise_for_status()
