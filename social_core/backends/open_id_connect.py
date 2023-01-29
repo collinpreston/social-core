@@ -57,10 +57,6 @@ class OpenIdConnectAuth(BaseOAuth2):
     JWKS_URI = ""
     TOKEN_ENDPOINT_AUTH_METHOD = ""
 
-    def __init__(self, *args, **kwargs):
-        self.id_token = None
-        super().__init__(*args, **kwargs)
-
     def authorization_url(self):
         return self.setting(
             "AUTHORIZATION_URL", self.AUTHORIZATION_URL
