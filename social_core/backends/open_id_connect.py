@@ -228,12 +228,12 @@ class OpenIdConnectAuth(BaseOAuth2):
 
         return claims
 
-    def request_access_token(self, url, *args, **kwargs):
+    def request_access_token(self, *args, **kwargs):
         """
         Retrieve the access token. Also, validate the id_token and
         store it (temporarily).
         """
-        response = self.get_json(url, *args, **kwargs)
+        response = self.get_json(*args, **kwargs)
         self.id_token = self.validate_and_return_id_token(
             response["id_token"], response["access_token"]
         )
