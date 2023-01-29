@@ -1,6 +1,7 @@
 import datetime
 import json
 from calendar import timegm
+import logging
 
 from jose import jwk, jwt
 from jose.jwt import ExpiredSignatureError, JWTClaimsError, JWTError
@@ -10,6 +11,8 @@ from social_core.backends.oauth import BaseOAuth2
 from social_core.exceptions import AuthTokenError
 from social_core.utils import cache
 
+
+social_logger = logging.getLogger("social")
 
 class OpenIdConnectAssociation:
     """Use Association model to save the nonce by force."""
@@ -233,7 +236,7 @@ class OpenIdConnectAuth(BaseOAuth2):
         Retrieve the access token. Also, validate the id_token and
         store it (temporarily).
         """
-        print(*args)
+        social_logger.log(*args)
         response = self.get_json(*args, **kwargs)
         self.id_token = self.validate_and_return_id_token(
             response["id_token"], response["access_token"]
