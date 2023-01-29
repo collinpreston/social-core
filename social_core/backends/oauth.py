@@ -390,8 +390,8 @@ class BaseOAuth2(OAuthAuth):
         data["token_type"] = response.get("token_type") or kwargs.get("token_type")
         return data
 
-    def request_access_token(self, *args, **kwargs):
-        return self.get_json(*args, **kwargs)
+    def request_access_token(self, url, *args, **kwargs):
+        return self.get_json(url, *args, **kwargs)
 
     def process_error(self, data):
         if data.get("error"):
@@ -414,11 +414,11 @@ class BaseOAuth2(OAuthAuth):
 
         response = self.request_access_token(
             self.access_token_url(),
+            method=self.ACCESS_TOKEN_METHOD,
             data=data,
             params=params,
             headers=self.auth_headers(),
             auth=self.auth_complete_credentials(),
-            method=self.ACCESS_TOKEN_METHOD,
         )
         self.process_error(response)
         return self.do_auth(
