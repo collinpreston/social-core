@@ -221,7 +221,7 @@ class BaseAuth:
         otherwise return false."""
         return True
 
-    def request(self, url, method="GET", *args, **kwargs):
+    def request(self, url, *args, **kwargs):
         kwargs.setdefault("headers", {})
         if self.setting("PROXIES") is not None:
             kwargs.setdefault("proxies", self.setting("PROXIES"))
@@ -234,7 +234,7 @@ class BaseAuth:
         )
         if self.SEND_USER_AGENT and "User-Agent" not in kwargs["headers"]:
             kwargs["headers"]["User-Agent"] = self.setting("USER_AGENT") or user_agent()
-
+        method = kwargs.get("method", "GET") 
         try:
             if self.SSL_PROTOCOL:
                 session = SSLHttpAdapter.ssl_adapter_session(self.SSL_PROTOCOL)
